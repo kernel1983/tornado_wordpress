@@ -8,14 +8,10 @@ sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/vendor')
 
 os.chdir(os.path.dirname(os.path.abspath(__file__)))
 
-#import wsgiref.simple_server
-#import wsgiref.handlers
-#import tornado.wsgi
 import tornado.options
 import tornado.ioloop
 import tornado.web
 import tornado.template
-#import tornado.database
 import tornado.auth
 import tornado.locale
 

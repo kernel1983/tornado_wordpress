@@ -1,7 +1,6 @@
 import os
 
 import json
-#import tornado.database
 import torndb
 
 settings = {
@@ -15,5 +14,4 @@ settings = {
 
 
 conn = torndb.Connection("127.0.0.1", "wordpress", "root", "root")
-ring = [conn, conn]
 

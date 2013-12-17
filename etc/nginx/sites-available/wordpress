@@ -1,0 +1,38 @@
+server {
+    root /var/www/your_site;
+    index index.php;
+    server_name www.your_site.com;
+    access_log  /var/log/nginx/your_site.log;
+
+    location ~ ^/static/(.*)\.(html|js|css|png|jpg|jpeg|gif|ico)$ {
+        alias /var/www/your_site_tornado/static/;
+        expires 24h;
+        log_not_found off;
+    }
+
+    location ~ ^/(.*)\.(html|js|css|png|jpg|jpeg|gif|ico)$ {
+        expires 24h;
+        log_not_found off;
+    }
+
+    location ~ \.php$ {
+        fastcgi_pass 127.0.0.1:9000;
+        fastcgi_index index.php;
+        fastcgi_param  SCRIPT_FILENAME  $document_root$fastcgi_script_name;
+        include fastcgi_params;
+    }
+
+    location /wp-admin {
+        try_files $uri $uri/ /index.php;
+    }
+
+    location / {
+        send_timeout 300;
+        proxy_pass http://127.0.0.1:8000;
+        proxy_set_header Host $host;
+        proxy_set_header X-Real-IP $remote_addr;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header   Referer $http_referer;
+        proxy_set_header   Cookie $http_cookie;
+    }
+}
